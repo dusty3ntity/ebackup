@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -134,9 +135,9 @@ public class eBackup extends JavaPlugin implements CommandExecutor, Listener, Ta
                 } else if (onlyBackupIfPlayersWereOn && !playersWereOnSinceLastBackup.get()) {
                     getLogger().info("No players were detected to have joined since the last backup or server start, skipping backup...");
                 } else {
-                    BackupUtil.doBackup(true);
+                    BackupUtil.doBackup(true, true);
 
-                    if (Bukkit.getServer().getOnlinePlayers().size() == 0) {
+                    if (Bukkit.getServer().getOnlinePlayers().isEmpty()) {
                         playersWereOnSinceLastBackup.set(false);
                     }
                 }
@@ -198,7 +199,7 @@ public class eBackup extends JavaPlugin implements CommandExecutor, Listener, Ta
                 } else {
                     sender.sendMessage(ChatColor.GRAY + "Starting backup (check console logs for details)...");
                     Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), () -> {
-                        BackupUtil.doBackup(true);
+                        BackupUtil.doBackup(true, false);
                         if (sender instanceof Player) {
                             sender.sendMessage(ChatColor.GRAY + "Finished local backup!");
                         }
@@ -211,7 +212,7 @@ public class eBackup extends JavaPlugin implements CommandExecutor, Listener, Ta
                 } else {
                     sender.sendMessage(ChatColor.GRAY + "Starting backup (check console logs for details)...");
                     Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), () -> {
-                        BackupUtil.doBackup(false);
+                        BackupUtil.doBackup(false, false);
                         sender.sendMessage(ChatColor.GRAY + "Finished!");
                     });
                 }

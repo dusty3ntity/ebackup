@@ -4,6 +4,7 @@ import com.jcraft.jsch.*;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 
 import java.io.*;
@@ -13,8 +14,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 /*
    Copyright 2020 EspiDev
@@ -58,13 +57,21 @@ public class BackupUtil {
 
     // actually do the backup
     // run async please
-    public static void doBackup(boolean uploadToServer) {
+    public static void doBackup(boolean uploadToServer, boolean isScheduled) {
         List<File> tempIgnore = new ArrayList<>();
-        eBackup.getPlugin().getLogger().info("Starting backup...");
+        if (isScheduled) {
+            Bukkit.broadcastMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "eBackup" + ChatColor.GRAY + "] " + ChatColor.GOLD + "Starting scheduled backup...");
+        } else {
+            eBackup.getPlugin().getLogger().info("Starting backup...");
+        }
 
         // do not backup when plugin is disabled
         if (!eBackup.getPlugin().isEnabled()) {
-            eBackup.getPlugin().getLogger().warning("Unable to start a backup, because the plugin is disabled by the server!");
+            if (isScheduled) {
+                Bukkit.broadcastMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "eBackup" + ChatColor.GRAY + "] " + ChatColor.GOLD + "Unable to start a backup, the plugin is disabled by the server!");
+            } else {
+                eBackup.getPlugin().getLogger().warning("Unable to start a backup, the plugin is disabled by the server!");
+            }
             return;
         }
 
@@ -163,7 +170,11 @@ public class BackupUtil {
             // unlock
             eBackup.getPlugin().isInBackup.set(false);
         }
-        eBackup.getPlugin().getLogger().info("Local backup complete!");
+        if (isScheduled) {
+            Bukkit.broadcastMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "eBackup" + ChatColor.GRAY + "] " + ChatColor.GOLD + "Scheduled backup complete!");
+        } else {
+            eBackup.getPlugin().getLogger().info("Local backup complete!");
+        }
     }
 
     public static void testUpload() {
