@@ -1,7 +1,7 @@
 # eBackup
 Simple and reliable backups for your spigot server! Supports FTP/SFTP!
 
-Feel free to fork and change for your own use.
+Forked to migrate to another cron utilities library ([cron-utils](https://mvnrepository.com/artifact/com.cronutils/cron-utils) &rarr; [cron4j](https://mvnrepository.com/artifact/it.sauronsoftware.cron4j/cron4j)) to work with Java 8 and Minecraft 1.7.10.
 
 View on [SpigotMC](https://www.spigotmc.org/resources/ebackup-simple-and-reliable-backups-for-your-server-supports-ftp-sftp.69917/).
 

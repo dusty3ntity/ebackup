@@ -1,22 +1,19 @@
-crontask: '0 0 4 * * *' # This would make it every day at 4 AM
+crontask: '*/30 * * * *' # This would make it every 30 minutes
 
 # CronTask format:
-# * * * * * *
-# | | | | | |
-# | | | | | +---- Day of the Week   (1-7)
-# | | | | +------ Month             (1-12)
-# | | | +-------- Day of the Month  (1-31)
-# | | +---------- Hour              (0-23)
-# | +------------ Minute            (0-59)
-# +-------------- Second            (0-59)
+# * * * * *
+# | | | | |
+# | | | | +---- Day of the Week   (1-7)
+# | | | +------ Month             (1-12)
+# | | +-------- Day of the Month  (1-31)
+# | +---------- Hour              (0-23)
+# +------------ Minute            (0-59)
 
 # A few more examples...
-# crontask: '0 0 * * * *' This would make it every hour
-# crontask: '0 0 4 * * 7' This would make it every sunday at 4 AM
-# crontask: '0 0 4 1 * *' This would make it every first of the month at 4 AM
-# crontask: '0 30 3 */2 * *' This would make it at 3:30 AM every 2 days
-
-# If you do /ebackup reload, you can see a description in the console of what the cron task does.
+# crontask: '0 * * * *' This would make it every hour
+# crontask: '0 4 * * 7' This would make it every sunday at 4 AM
+# crontask: '0 4 1 * *' This would make it every first of the month at 4 AM
+# crontask: '30 3 */2 * *' This would make it at 3:30 AM every 2 days
 
 # Filename format for the backup files created
 backup-format: 'eBackup {DATE}'
